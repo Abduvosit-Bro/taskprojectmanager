@@ -1,77 +1,139 @@
-# Student Project / Schedule / Task Manager
+# 🚀 Task & Project Manager
 
-Bilingual (Japanese/Uzbek) student project/task/calendar app with offline translation fallback, in-app notifications, and a clean React UI.
+![Project Status](https://img.shields.io/badge/status-active-success.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Django](https://img.shields.io/badge/Django-5.0-green)
+![React](https://img.shields.io/badge/React-18-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 
-## Stack
-- Django 5 + DRF + PostgreSQL
-- JWT auth (simplejwt)
-- Celery + Redis (notifications)
-- drf-spectacular (OpenAPI)
-- React + Vite + TypeScript + Tailwind + FullCalendar
+**Task & Project Manager** — это мощное и интуитивно понятное веб-приложение для управления студенческими проектами, задачами и расписанием. Поддерживает двуязычный интерфейс (Узбекский/Японский) с функцией автоматического перевода и оффлайн-режимом.
 
-## Quick Start
+---
 
-### 1) Infrastructure
+## ✨ Ключевые Возможности
+
+*   **🌐 Мультиязычность**: Полная поддержка Узбекского и Японского языков с возможностью переключения на лету.
+*   **🤖 Умный перевод**: Автоматический перевод контента (задачи, проекты) с использованием AI (или локального фоллбека).
+*   **📅 Календарь и Расписание**: Интерактивный календарь (FullCalendar) для отслеживания дедлайнов и событий.
+*   **📊 Управление Проектами**: Создание, редактирование и удаление проектов. Привязка задач к нескольким проектам одновременно.
+*   **✅ Задачи и Тэги**: Гибкая система управления задачами с приоритетами, статусами и тегами.
+*   **🔔 Уведомления**: Система уведомлений в реальном времени (Celery + Redis) о важных событиях и дедлайнах.
+*   **🌓 Темная тема**: Поддержка светлой и темной темы интерфейса.
+
+---
+
+## 🛠 Технологический Стек
+
+### Backend
+*   **Framework**: Django 5 + Django REST Framework (DRF)
+*   **Database**: PostgreSQL
+*   **Auth**: JWT (SimpleJWT)
+*   **Async Tasks**: Celery + Redis
+*   **API Docs**: drf-spectacular (OpenAPI/Swagger)
+
+### Frontend
+*   **Core**: React + Vite
+*   **Language**: TypeScript
+*   **Styling**: Tailwind CSS
+*   **State Management**: React Query (TanStack Query)
+*   **Routing**: React Router DOM
+*   **UI Components**: Headless UI + Custom components
+
+---
+
+## 🚀 Быстрый Старт
+
+### Предварительные требования
+*   Python 3.10+
+*   Node.js 18+
+*   PostgreSQL
+*   Redis (для уведомлений)
+
+### 1️⃣ Настройка Инфраструктуры (Docker)
+Если у вас установлен Docker, вы можете запустить базу данных и Redis одной командой:
 ```bash
-docker compose up -d
+docker compose up -d db redis
 ```
 
-### 2) Backend
+### 2️⃣ Установка Backend
 ```bash
 cd backend
-cp .env.example .env
+
+# 1. Создайте и активируйте виртуальное окружение
 python -m venv .venv
+# Windows:
 .\.venv\Scripts\activate
+# Linux/Mac:
+# source .venv/bin/activate
+
+# 2. Установите зависимости
 pip install -r requirements.txt
+
+# 3. Настройте переменные окружения
+cp .env.example .env
+# (Отредактируйте .env при необходимости, укажите данные БД)
+
+# 4. Примените миграции и создайте демо-данные
 python manage.py migrate
 python manage.py seed_demo
+
+# 5. Запустите сервер
 python manage.py runserver
 ```
 
-### 3) Celery (worker + beat)
+### 3️⃣ Запуск Celery (для уведомлений)
+В новом терминале (в папке `backend` с активным venv):
 ```bash
-cd backend
-.\.venv\Scripts\activate
-celery -A config.celery worker -l info
+# Windows (режим solo обязательен для разработки):
+celery -A config.celery worker -l info -P solo -c 1
+
+# Linux/Mac:
+# celery -A config.celery worker -l info
+```
+Для периодических задач (beat):
+```bash
 celery -A config.celery beat -l info
 ```
 
-#### Windows note
-On Windows, run the worker in solo mode to avoid `WinError 5` issues:
-```powershell
-celery -A config.celery worker -l info -P solo -c 1
-```
-
-### 4) Frontend
+### 4️⃣ Установка Frontend
 ```bash
 cd frontend
-cp .env.example .env
+
+# 1. Установите зависимости
 npm install
+
+# 2. Настройте переменные окружения
+cp .env.example .env
+# Убедитесь, что VITE_API_URL=http://127.0.0.1:8000/api
+
+# 3. Запустите сервер разработки
 npm run dev
 ```
 
-Open:
-- API docs: `http://localhost:8000/api/docs/`
-- UI: `http://localhost:5173`
+Приложение будет доступно по адресу: `http://localhost:5173`
 
-## New Endpoints
-- `GET /api/auth/timezones` -> list of IANA timezones
-- `GET /api/notifications/{id}` -> notification details with related entity snapshot
+---
 
-## Regression Notes
-- "New Project" modal now displays API validation errors and refreshes the project list on success.
+## 📚 API Документация
+После запуска бэкенда, документация API доступна по адресам:
+*   **Swagger UI**: `http://localhost:8000/api/docs/`
+*   **ReDoc**: `http://localhost:8000/api/schema/redoc/`
 
-## Demo Account
-- Email: `demo@example.com`
-- Password: `password123`
+---
 
-## Tests
+## 🧪 Тестирование
+Для запуска тестов бэкенда:
 ```bash
 cd backend
 pytest
 ```
 
-## Notes
-- Offline translation is deterministic: `[UZ]` or `[JA]` prefixes.
-- If `OPENAI_API_KEY` is set, the translation provider will attempt OpenAI first and fallback to local.
-- Default timezone: `Asia/Tashkent`.
+---
+
+## 👤 Автор
+**Abduvosit-Bro**
+*   GitHub: [@Abduvosit-Bro](https://github.com/Abduvosit-Bro)
+
+---
+*Created with ❤️ for students & developers.*
