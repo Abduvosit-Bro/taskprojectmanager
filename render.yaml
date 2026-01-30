@@ -1,0 +1,37 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: task-manager-backend
+    env: python
+    buildCommand: |
+      pip install -r backend/requirements.txt
+      python backend/manage.py collectstatic --noinput
+      python backend/manage.py migrate
+    startCommand: gunicorn config.wsgi:application --chdir backend --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings.prod
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 2
+
+  # Celery Worker
+  - type: worker
+    name: task-manager-worker
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: celery -A config.celery worker -l info --workdir backend
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings.prod
+
+databases:
+  - name: task-manager-db
+    databaseName: task_manager
+    user: task_user
+

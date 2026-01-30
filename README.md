@@ -1,5 +1,8 @@
 # 🚀 Task & Project Manager
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAbduvosit-Bro%2FTask-Project-Manager)
+
 ![Project Status](https://img.shields.io/badge/status-active-success.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
@@ -8,6 +11,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 
 **Task & Project Manager** — это мощное и интуитивно понятное веб-приложение для управления студенческими проектами, задачами и расписанием. Поддерживает двуязычный интерфейс (Узбекский/Японский) с функцией автоматического перевода и оффлайн-режимом.
+
+> **🔗 Live Demo**: [Посмотреть Демо](https://github.com/Abduvosit-Bro/Task-Project-Manager) (Замените на вашу ссылку после деплоя)
 
 ---
 
@@ -42,7 +47,24 @@
 
 ---
 
-## 🚀 Быстрый Старт
+## 🚀 Деплой (Deployment)
+
+Проект подготовлен для быстрого развертывания.
+
+### Backend (Render.com)
+1.  Нажмите кнопку **Deploy to Render** выше.
+2.  Подключите свой GitHub репозиторий.
+3.  Render автоматически создаст базу данных PostgreSQL и веб-сервис.
+4.  После деплоя вы получите URL бэкенда (например, `https://your-app.onrender.com`).
+
+### Frontend (Vercel)
+1.  Нажмите кнопку **Deploy with Vercel** выше.
+2.  Укажите переменную окружения `VITE_API_URL`, равную вашему URL бэкенда (например, `https://your-app.onrender.com/api`).
+3.  Нажмите **Deploy**.
+
+---
+
+## 🚀 Быстрый Старт (Локально)
 
 ### Предварительные требования
 *   Python 3.10+
