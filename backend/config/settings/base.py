@@ -8,15 +8,17 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 
 load_dotenv(BASE_DIR / '.env')
 
+DEBUG = os.getenv('DJANGO_DEBUG', 'false').lower() == 'true'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 # In production, this MUST be set via environment variable
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') or os.getenv('SECRET_KEY')
 if not SECRET_KEY:
     if DEBUG:
         SECRET_KEY = 'dev-secret-key-change-in-production'  # Only for development
     else:
-        raise ValueError('DJANGO_SECRET_KEY environment variable must be set in production!')
-DEBUG = os.getenv('DJANGO_DEBUG', 'false').lower() == 'true'
+        raise ValueError('DJANGO_SECRET_KEY or SECRET_KEY environment variable must be set in production!')
+
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if h.strip()]
 
 INSTALLED_APPS = [
