@@ -69,11 +69,55 @@
 ### Предварительные требования
 *   Python 3.10+
 *   Node.js 18+
-*   PostgreSQL
-*   Redis (для уведомлений)
+*   Git
 
-### 1️⃣ Настройка Инфраструктуры (Docker)
-Если у вас установлен Docker, вы можете запустить базу данных и Redis одной командой:
+### Вариант 1: Без Docker (Самый простой)
+
+Проект настроен для работы "из коробки" с использованием SQLite и без необходимости установки Redis.
+
+**1. Backend**
+```bash
+cd backend
+
+# 1. Создайте и активируйте виртуальное окружение
+python -m venv .venv
+# Windows:
+.\.venv\Scripts\activate
+# Linux/Mac:
+# source .venv/bin/activate
+
+# 2. Установите зависимости
+pip install -r requirements.txt
+
+# 3. Настройте переменные окружения
+cp .env.example .env
+# Откройте .env и добавьте/убедитесь в наличии:
+# USE_SQLITE=True
+# CELERY_TASK_ALWAYS_EAGER=True
+
+# 4. Примените миграции и создайте демо-данные
+python manage.py migrate
+python manage.py seed_demo
+
+# 5. Запустите сервер
+python manage.py runserver
+```
+
+**2. Frontend**
+```bash
+cd frontend
+
+# 1. Установите зависимости
+npm install
+
+# 2. Запустите сервер разработки
+npm run dev
+# Или если есть проблемы с путями на Windows:
+# node node_modules/vite/bin/vite.js
+```
+
+### Вариант 2: С Docker (Для продвинутых)
+Если у вас установлен Docker, вы можете запустить базу данных и Redis через него.
 ```bash
 docker compose up -d db redis
 ```
