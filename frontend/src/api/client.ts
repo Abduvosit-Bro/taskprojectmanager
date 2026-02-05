@@ -34,7 +34,7 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
+  async (error: any) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean }
 
     if (axios.isCancel(error) || error.code === 'ERR_CANCELED' || error.message === 'canceled') {
