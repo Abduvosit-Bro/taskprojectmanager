@@ -43,10 +43,10 @@
 ## 3. 技術スタック (Tech Stack)
 
 **Backend:**
-- **Django 5 & DRF:**堅牢でスケーラブルなAPIサーバー。
-- **PostgreSQL:** 信頼性の高いリレーショナルデータベース。
-- **Celery + Redis:** 非同期タスク処理（通知、AI翻訳）。
-- **JWT Auth:** セキュアな認証システム。
+- **Django 5 & DRF:** 堅牢でスケーラブルなAPIサーバー。
+- **Flexible Database:** 本番環境は **PostgreSQL**、開発環境は **SQLite** に対応（Docker不要）。
+- **Async Tasks:** Celery + Redis（ローカル開発用のEagerモードもサポート）。
+- **Auth:** JWTによるセキュアな認証。
 
 **Frontend:**
 - **React + TypeScript:** モダンで型安全なUI開発。
@@ -56,7 +56,20 @@
 
 ---
 
-## 4. デモンストレーション (Demo)
+## 4. インフラとデプロイ (Infrastructure & Deployment)
+
+**開発環境 (Development):**
+- **Docker-less Support:** Dockerなしでも簡単にセットアップ可能（SQLite & Celery Eager）。
+- **Git & GitHub:** バージョン管理とCI/CD連携。
+
+**本番環境 (Production):**
+- **Backend:** Render.com (Gunicorn, WhiteNoise, PostgreSQL)。
+- **Frontend:** Vercel (Vite Build, Edge Network)。
+- **Security:** CORS設定、環境変数による機密情報の管理。
+
+---
+
+## 5. デモンストレーション (Demo)
 *(ここで実際の画面を見せる、またはリンクを紹介する)*
 
 1.  **ログイン & ダッシュボード:** 直感的なホーム画面。
@@ -66,14 +79,14 @@
 
 ---
 
-## 5. 今後の展望 (Future Roadmap)
+## 6. 今後の展望 (Future Roadmap)
 - **モバイルアプリ化:** React Nativeによるスマホ対応。
 - **チームコラボレーション機能:** コメント機能、ファイル共有の強化。
 - **AI機能の拡張:** タスクの優先度自動提案、学習スケジュールの最適化。
 
 ---
 
-## 6. まとめ (Conclusion)
+## 7. まとめ (Conclusion)
 **Task & Project Manager** は、単なるTo-Doリストではなく、学生の成功をサポートする多言語対応のパートナーです。
 最新のWeb技術を駆使し、使いやすさと機能性を両立させました。
 
