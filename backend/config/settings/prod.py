@@ -11,7 +11,15 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 # Database
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+db_config = dj_database_url.config(conn_max_age=600, ssl_require=True)
+if db_config:
+    DATABASES['default'] = db_config
+else:
+    # Fallback to SQLite if DATABASE_URL is not set (e.g. during build)
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 
 # Static Files
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -29,6 +37,7 @@ except ValueError:
     MIDDLEWARE.insert(0, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 # Allowed Hosts
+ALLOWED_HOSTS = ['*']  # Allow all hosts for Render deployment to avoid health check issues
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
