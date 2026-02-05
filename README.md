@@ -154,7 +154,7 @@ pytest
 ---
 
 ## 👤 Автор
-**Abduvosit-Bro**
+**Abduvosit**
 *   GitHub: [@Abduvosit-Bro](https://github.com/Abduvosit-Bro)
 
 ---
